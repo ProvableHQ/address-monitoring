@@ -1,0 +1,1002 @@
+[
+  {
+    "msg_id": "\\xf238a2381255691041868dffdda0c0d04334ab1c3e3b8a41988d4fbf9db94a10",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "1000000000000000",
+    "message_amount_raw": "1000000000000000",
+    "amount": "0.001",
+    "destination_address": "aleo13phwpd54uq4pqssa7dksqe3l0t0ecdu350wwr6dqh9s9yyhjzygs7xue64",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xe07c61a9a0f28ba2af0b0580448e2aa92ba5e91c1f6d7b3785d9684b86b7af49",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "50000000",
+    "message_amount_raw": "50000000",
+    "amount": "0.05",
+    "destination_address": "aleo13phwpd54uq4pqssa7dksqe3l0t0ecdu350wwr6dqh9s9yyhjzygs7xue64",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x3ec55f1bcc5207d987b2ac11a7d7d0fe9bec7af8a8fd523f84e8256a5ad2df4c",
+    "origin_chain": "ethereum",
+    "token": "WBTC",
+    "amount_raw": "6193197",
+    "message_amount_raw": "6193197",
+    "amount": "0.06193197",
+    "destination_address": "aleo1zg4xags46atksfq7pjuuqyppnsklz3zzc0l6xm8zzuc9jzhve5rqxcs3re",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x0222050629e19c90c74276f09dc4db20ab2efc054919cae614cd8ad2e09acf1c",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "1784831506348999130",
+    "message_amount_raw": "1784831506348999130",
+    "amount": "1.78483150634899913",
+    "destination_address": "aleo1zg4xags46atksfq7pjuuqyppnsklz3zzc0l6xm8zzuc9jzhve5rqxcs3re",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x3049cb66a026363e26ab179834eb61d8204cd4e527f652ba2d1afe11401c3a2b",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "4000000000000000000",
+    "message_amount_raw": "4000000000000000000",
+    "amount": "4",
+    "destination_address": "aleo1jkhanawwgfqwt3j505nq3v2kn2933w8s4c9d9wr2a2lpqr9r4qqsnfzrqj",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x0390dfe597f0df495af1ff3e0790973caaf3f35c761f1ad9412d6291bc3cc81b",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "895800000000000000",
+    "message_amount_raw": "895800000000000000",
+    "amount": "0.8958",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x34fd65cb3037329156a912d0abe0fe3197e1de9bc161b12bff318c5fb4e2f339",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "776400000000000000",
+    "message_amount_raw": "776400000000000000",
+    "amount": "0.7764",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xd34668acad5dad6ce0ab30872650f52b7913bfc835c978382db0fcc2377e83cd",
+    "origin_chain": "hyperevm",
+    "token": "WBTC",
+    "amount_raw": "646801",
+    "message_amount_raw": "646801",
+    "amount": "0.00646801",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xc71a027a8e289eeb1572684079490442c21269db3d51b41859b5c0fe6470374d",
+    "origin_chain": "ethereum",
+    "token": "WBTC",
+    "amount_raw": "6760945",
+    "message_amount_raw": "6760945",
+    "amount": "0.06760945",
+    "destination_address": "aleo1zg4xags46atksfq7pjuuqyppnsklz3zzc0l6xm8zzuc9jzhve5rqxcs3re",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x6f0af3234549e4c86a3cd7d2b6da0142789bc71190e84a93c68b42bf0c09f219",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "23666000",
+    "message_amount_raw": "23666000",
+    "amount": "0.23666",
+    "destination_address": "aleo1zg4xags46atksfq7pjuuqyppnsklz3zzc0l6xm8zzuc9jzhve5rqxcs3re",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x19339aceb84b03cb4a537b994ca99979bd31ddbafe222e29c71d32582b29927a",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "6530000000",
+    "message_amount_raw": "6530000000",
+    "amount": "6.53",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x8886e38e4af96faabac6921a7f1e3eb8fade93c97b35c1a17628c93e9f0e52b9",
+    "origin_chain": "hyperevm",
+    "token": "WBTC",
+    "amount_raw": "1277746",
+    "message_amount_raw": "1277746",
+    "amount": "0.01277746",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xaa0d879fe7643624f71ac4e8e609ddc4f44c5c8bf6e4466fa96dd58a7d651be7",
+    "origin_chain": "ethereum",
+    "token": "WBTC",
+    "amount_raw": "6230727",
+    "message_amount_raw": "6230727",
+    "amount": "0.06230727",
+    "destination_address": "aleo1zg4xags46atksfq7pjuuqyppnsklz3zzc0l6xm8zzuc9jzhve5rqxcs3re",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xa5200bcd7db4b84c73d9203f93f6a3df83049547de9321f62ef429dedb8d9351",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "13194210339",
+    "message_amount_raw": "13194210339",
+    "amount": "13.194210339",
+    "destination_address": "aleo1ym8kmsuv37h47xua5s087fe4zgulw88tt7pulqpssz2348v2ggfq0tsrjk",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xc607ca5098c06846e235b111e4b02fecadf041e184ba95193321b372f3e4922c",
+    "origin_chain": "ethereum",
+    "token": "WBTC",
+    "amount_raw": "2807325",
+    "message_amount_raw": "2807325",
+    "amount": "0.02807325",
+    "destination_address": "aleo1zg4xags46atksfq7pjuuqyppnsklz3zzc0l6xm8zzuc9jzhve5rqxcs3re",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x8092fc145320b38946b745e8ac168d75ddac775a52093acd0c4feae436f6f4e1",
+    "origin_chain": "ethereum",
+    "token": "WBTC",
+    "amount_raw": "3660760",
+    "message_amount_raw": "3660760",
+    "amount": "0.0366076",
+    "destination_address": "aleo1zg4xags46atksfq7pjuuqyppnsklz3zzc0l6xm8zzuc9jzhve5rqxcs3re",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xf28d79635be57e1eb63ae6f1f39edcb22c4a8fef5c3c719e06062737e0394454",
+    "origin_chain": "hyperevm",
+    "token": "WBTC",
+    "amount_raw": "1270637",
+    "message_amount_raw": "1270637",
+    "amount": "0.01270637",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xd088d466cdb29fe4534144aca82ec775c14cd64cf52a01080d1e1b6902b16e0d",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "124990000000",
+    "message_amount_raw": "124990000000",
+    "amount": "124.99",
+    "destination_address": "aleo1jkhanawwgfqwt3j505nq3v2kn2933w8s4c9d9wr2a2lpqr9r4qqsnfzrqj",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xaf16908f800531ce176259bda3b4fdd2bba8e0c38b300ee5d351ef2738e6cdef",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "99990000000",
+    "message_amount_raw": "99990000000",
+    "amount": "99.99",
+    "destination_address": "aleo1jkhanawwgfqwt3j505nq3v2kn2933w8s4c9d9wr2a2lpqr9r4qqsnfzrqj",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x578390560f5ff5aac7735806c83fd0c90715c3db40feb3e2b11276ac3139572b",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "21615034668",
+    "message_amount_raw": "21615034668",
+    "amount": "21.615034668",
+    "destination_address": "aleo1ym8kmsuv37h47xua5s087fe4zgulw88tt7pulqpssz2348v2ggfq0tsrjk",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xbe21d3e46335fa8bcad9357f48807eff83a6aa0aa68555180c852511debb2015",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "10320000000",
+    "message_amount_raw": "10320000000",
+    "amount": "10.32",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xd9d2d16093e752325715544a78d872efc703dd5c469e27d25a1ce256e64f489e",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "200000000",
+    "message_amount_raw": "200000000",
+    "amount": "0.2",
+    "destination_address": "aleo1afgmc4fsczjxwa6629kj0zta3mgwfxln2a9daxg69p6h7tx7rvxqztrwgg",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xfd4ca0672217a78d76f7e8773a3b05be9d4b4e9b3288f8c45444e93ca3dd887e",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "313271764325363329",
+    "message_amount_raw": "313271764325363329",
+    "amount": "0.313271764325363329",
+    "destination_address": "aleo12g6jz3skfgkvezxz7g8p5c6afjju4nhunu98wdf2mamg53dwdvxqhju3ud",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x777cbce248b64edeaf431665882a5bb48fdc5f1fb97453a0056c4219203fd344",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "11600059666",
+    "message_amount_raw": "11600059666",
+    "amount": "11.600059666",
+    "destination_address": "aleo1ym8kmsuv37h47xua5s087fe4zgulw88tt7pulqpssz2348v2ggfq0tsrjk",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x358ae0937c91dea93e1d0170d91b2e7a2b50e2064094483a01053faaddc663cf",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "32615526",
+    "message_amount_raw": "32615526",
+    "amount": "0.32615526",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xbce67a791d329a5d0d0d031dff29b5d37c840920e5d3563e6b7ab6517dc9cff6",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "23737224856",
+    "message_amount_raw": "23737224856",
+    "amount": "23.737224856",
+    "destination_address": "aleo1zg4xags46atksfq7pjuuqyppnsklz3zzc0l6xm8zzuc9jzhve5rqxcs3re",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xc127b59e05c828a283a2b0b4511721e0e528130b134ac3c428eaeeb5c5dd2242",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "866300000000000000",
+    "message_amount_raw": "866300000000000000",
+    "amount": "0.8663",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xb6fa3662c04a0439b1f8d3ec69d087003f72331fdcde3b8a7d1aa107c043de5d",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "11533950",
+    "message_amount_raw": "11533950",
+    "amount": "0.1153395",
+    "destination_address": "aleo12nw72vd9x4l703fe848dl3gsm4u40l30etuhd979r6a9dgzzggxsn4shqk",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xdfdc4d8c31fde13ab1767249c2bc8808ea84274b8b42fd20efba8ee744622104",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "15223779",
+    "message_amount_raw": "15223779",
+    "amount": "0.15223779",
+    "destination_address": "aleo12nw72vd9x4l703fe848dl3gsm4u40l30etuhd979r6a9dgzzggxsn4shqk",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xca9c08497c56faa3ad89f56327b4437633e5278599e390cc0a982f528635c320",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "499499240",
+    "message_amount_raw": "499499240",
+    "amount": "4.9949924",
+    "destination_address": "aleo1jkhanawwgfqwt3j505nq3v2kn2933w8s4c9d9wr2a2lpqr9r4qqsnfzrqj",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x7f05a9d96c49b1bcc3bdca8aca7027f37ba4d23d0ddba65d70c24fd913d74371",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "22709659",
+    "message_amount_raw": "22709659",
+    "amount": "0.22709659",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xfba22bf4b2f381b97120ccb731bf0f78230afdc4425396a3b092f07111e5889d",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "22499894",
+    "message_amount_raw": "22499894",
+    "amount": "0.22499894",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xb7883d22d774ab44b5305d1b9d94177aef4cb410201f7dd19d8f42fc7616df48",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "23531798",
+    "message_amount_raw": "23531798",
+    "amount": "0.23531798",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xbf072e409c8451f8ad3d6ec251d4e578ad8efe395ebb58ce388745f377879c01",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "159629",
+    "message_amount_raw": "159629",
+    "amount": "0.00159629",
+    "destination_address": "aleo1jkhanawwgfqwt3j505nq3v2kn2933w8s4c9d9wr2a2lpqr9r4qqsnfzrqj",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x17fa18c243aba8be1f69ec362fa83d8bfb6794bb0edb48269fc915a9e957d510",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "22141053",
+    "message_amount_raw": "22141053",
+    "amount": "0.22141053",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x65d23933e7c10a266e2f0d6abb07484d7fa47fec458560be868b1a36f673f9e3",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "20000000",
+    "message_amount_raw": "20000000",
+    "amount": "0.02",
+    "destination_address": "aleo13phwpd54uq4pqssa7dksqe3l0t0ecdu350wwr6dqh9s9yyhjzygs7xue64",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xfb4eed4bc8f16df09641f216efcee31b57a7882661ff13fd3904c22ae6dbed65",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "24208799",
+    "message_amount_raw": "24208799",
+    "amount": "0.24208799",
+    "destination_address": "aleo12nw72vd9x4l703fe848dl3gsm4u40l30etuhd979r6a9dgzzggxsn4shqk",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x0704ffd9a709f7e8b9713b8ac216a72a9e440dcbcfb8cbc76dec1d1ae7f7ecde",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "867800000000000000",
+    "message_amount_raw": "867800000000000000",
+    "amount": "0.8678",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x30ea9e39c58752d31abc7480b092f5f290bd1ce99392a64fa6c6c36463c8e40e",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "866500000000000000",
+    "message_amount_raw": "866500000000000000",
+    "amount": "0.8665",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x9af8d7eafdcb88723c665de12aaf7eb856f5b808ed2fa2472236de1077507be7",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "865500000000000000",
+    "message_amount_raw": "865500000000000000",
+    "amount": "0.8655",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x67f69d45b1f92f7a5b8542dac0040461dbabe52540a7bd3ccc06ddb49d12e32b",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "864400000000000000",
+    "message_amount_raw": "864400000000000000",
+    "amount": "0.8644",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xa37b56b0748d9be95ea29e7a585f27dbb8a24911ceebc38bfc08860097313986",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "23983884",
+    "message_amount_raw": "23983884",
+    "amount": "0.23983884",
+    "destination_address": "aleo12nw72vd9x4l703fe848dl3gsm4u40l30etuhd979r6a9dgzzggxsn4shqk",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x648a82a437dc1ab3bc7c608c909a2ee582ff6bbf4018d3c09e17a7521a48eb5a",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "380303953397474002",
+    "message_amount_raw": "380303953397474002",
+    "amount": "0.380303953397474002",
+    "destination_address": "aleo12g6jz3skfgkvezxz7g8p5c6afjju4nhunu98wdf2mamg53dwdvxqhju3ud",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x2e3166087b8ea4d1870a10b57bc5803349239b2f878965a64c57d8a232687ddb",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "39464781",
+    "message_amount_raw": "39464781",
+    "amount": "0.39464781",
+    "destination_address": "aleo12nw72vd9x4l703fe848dl3gsm4u40l30etuhd979r6a9dgzzggxsn4shqk",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xad7ff9f9497714d4ee8d18d0ebc8d9baa52ec8411c12ea35bb6c3af55383f06e",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "15697766",
+    "message_amount_raw": "15697766",
+    "amount": "0.15697766",
+    "destination_address": "aleo12nw72vd9x4l703fe848dl3gsm4u40l30etuhd979r6a9dgzzggxsn4shqk",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x8214dd548fcc4289e1127fc50f8bd6e090c4fb288ffc556fcd916e6e19747a7c",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "80000000000",
+    "message_amount_raw": "80000000000",
+    "amount": "80",
+    "destination_address": "aleo1jkhanawwgfqwt3j505nq3v2kn2933w8s4c9d9wr2a2lpqr9r4qqsnfzrqj",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xc7e8930506ee59bd3556706ed162f8277b35fb6209d2835264a2a3cdb7df02f4",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "862300000000000000",
+    "message_amount_raw": "862300000000000000",
+    "amount": "0.8623",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x4ea5f8334cd8e9daebe3dd54a675224a7a70c0b6e2559cba5b43989401836534",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "273809388632660675",
+    "message_amount_raw": "273809388632660675",
+    "amount": "0.273809388632660675",
+    "destination_address": "aleo12g6jz3skfgkvezxz7g8p5c6afjju4nhunu98wdf2mamg53dwdvxqhju3ud",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xd9db1bd47ad15b2c1a8730e39297f2d8e7b81bf29405621b64210c39cdf334d5",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "770881314273232",
+    "message_amount_raw": "770881314273232",
+    "amount": "0.000770881314273232",
+    "destination_address": "aleo13phwpd54uq4pqssa7dksqe3l0t0ecdu350wwr6dqh9s9yyhjzygs7xue64",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x253998636f9e9f9f3b872ad79224d1de19559596eb10ef9ccd54b29384c99a7a",
+    "origin_chain": "solanamainnet",
+    "token": "USDT",
+    "amount_raw": "10000",
+    "message_amount_raw": "10000000000000000",
+    "amount": "0.01",
+    "destination_address": "aleo1mx0tldt5qsqymn5a3whnmf9rx2whp837jjn0tvqgxqf86zg6dvyqnc8spm",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x59391c9e96e4a3c35037cd118195ddfea4887c92297b2a472b0d2a7891b41f1d",
+    "origin_chain": "ethereum",
+    "token": "USDT",
+    "amount_raw": "10000",
+    "message_amount_raw": "10000000000000000",
+    "amount": "0.01",
+    "destination_address": "aleo1mx0tldt5qsqymn5a3whnmf9rx2whp837jjn0tvqgxqf86zg6dvyqnc8spm",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x6d875def7ab030aadcd90008c32d799553f3f6bc275e0427e63d4cc74666ad4d",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "63626246",
+    "message_amount_raw": "63626246",
+    "amount": "0.63626246",
+    "destination_address": "aleo1zg4xags46atksfq7pjuuqyppnsklz3zzc0l6xm8zzuc9jzhve5rqxcs3re",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xe5c4a90450975ce09b4047bb46112bc2a05b1fe11949b6762fc3cb4fba24f607",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "42480016922295924959",
+    "message_amount_raw": "42480016922295924959",
+    "amount": "42.480016922295924959",
+    "destination_address": "aleo1rs6fdxg703s3em27uhxsehhfd8znaly22jt6upggrxc77q8d9yfq33pk28",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xf25f7bf38ffeadefbf71f4e19a8702c3ba646a431769f7ad421ab0997ffb098d",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "1187426",
+    "message_amount_raw": "1187426",
+    "amount": "0.01187426",
+    "destination_address": "aleo12mhws2nvns7n0vrey5fmmq5mntmdy483lhpm20gvy2fks5vxrqgsh5g7pa",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xb8d391dfba87af0bb32dffd154f3b53089290240c4b55e4337ea251a9a46ad8a",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "790206",
+    "message_amount_raw": "790206",
+    "amount": "0.00790206",
+    "destination_address": "aleo1kypwp5m7qtk9mwazgcpg0tq8aal23mnrvwfvug65qgcg9xvsrqgspyjm6n",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xcad731913c96cda3d493bea61e3f52ec01ff5a801a7711d63a71e00095124a29",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "7650701242",
+    "message_amount_raw": "7650701242",
+    "amount": "76.50701242",
+    "destination_address": "aleo1rs6fdxg703s3em27uhxsehhfd8znaly22jt6upggrxc77q8d9yfq33pk28",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x5ce204a55ddfafab4c824225f1bf3b5d31ab5624f3308c1001bd33f123631ead",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "854400000000000000",
+    "message_amount_raw": "854400000000000000",
+    "amount": "0.8544",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x30c8437413987cb5090e370a4877bf865b38459d41509528c3f19cd5665a34af",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "853700000000000000",
+    "message_amount_raw": "853700000000000000",
+    "amount": "0.8537",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xf14ae4644c7f581044c0f253437f65c8f86c8a79b1d869e4932a294f2ef8fd20",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "22646953916",
+    "message_amount_raw": "22646953916",
+    "amount": "22.646953916",
+    "destination_address": "aleo1ym8kmsuv37h47xua5s087fe4zgulw88tt7pulqpssz2348v2ggfq0tsrjk",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x831b54918c54ab144b8f9f8fe5377a21681217ba101436f57cddaee9de9df950",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "10994965720",
+    "message_amount_raw": "10994965720",
+    "amount": "10.99496572",
+    "destination_address": "aleo1ym8kmsuv37h47xua5s087fe4zgulw88tt7pulqpssz2348v2ggfq0tsrjk",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xe6709690fd10ff4b430a5dc7814348a8a06eb44948ed6950a0c24f3edd73f122",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "11604978916",
+    "message_amount_raw": "11604978916",
+    "amount": "11.604978916",
+    "destination_address": "aleo1ym8kmsuv37h47xua5s087fe4zgulw88tt7pulqpssz2348v2ggfq0tsrjk",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x78e30882d3bcb4df6dc0b174aa243a445a7e63b4eae55b446e28b84b1884f307",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "787706",
+    "message_amount_raw": "787706",
+    "amount": "0.00787706",
+    "destination_address": "aleo1a6a4fsa2vlk7tacawaezej67cntrrd79dx2mqd9k663rnkjfcgrs4a30vd",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x46c830533d92cff4d790d09a3e484ea180695ba052220801584b55539cbd5b6b",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "500000",
+    "message_amount_raw": "500000",
+    "amount": "0.005",
+    "destination_address": "aleo17cefz04hlz89aa5wn6rppy5llym3nhley0h0pvsulklcpud8tgyq4t8n2e",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xeda41260bd92429fa1178d127c8c99cb2f9a71d189a845c8ce909964b1979906",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "600000",
+    "message_amount_raw": "600000",
+    "amount": "0.006",
+    "destination_address": "aleo17cefz04hlz89aa5wn6rppy5llym3nhley0h0pvsulklcpud8tgyq4t8n2e",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xbdf2caf56868c8fe63157004d56b1870d0fd5bd2ef3453dc3f08c7889a35b503",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "9980000000",
+    "message_amount_raw": "9980000000",
+    "amount": "9.98",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x8ebee28a1526f38bd8a791b8b57bf6e86639450a6f3ec5e374de8cef5b52da82",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "852800000000000000",
+    "message_amount_raw": "852800000000000000",
+    "amount": "0.8528",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xfa19dd191a9c90e1377998dde39d87fc0031a7e2dbbaeca8eedef527a0653dcb",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "500000",
+    "message_amount_raw": "500000",
+    "amount": "0.005",
+    "destination_address": "aleo1z4rrhzaz6dq7yamagg06qauywpwchnr0yxfvlyttg0zx4gnf5qgsy90xux",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xb847e7ce6841b8755897995e3b31ba7796d5a273229c7a001f673bba0d59c511",
+    "origin_chain": "solanamainnet",
+    "token": "ZEC",
+    "amount_raw": "500000",
+    "message_amount_raw": "500000",
+    "amount": "0.005",
+    "destination_address": "aleo1z4rrhzaz6dq7yamagg06qauywpwchnr0yxfvlyttg0zx4gnf5qgsy90xux",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xec828884c3890246024811a20b4008882092ad70ad264350bf429f58080b8afd",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "9965000000",
+    "message_amount_raw": "9965000000",
+    "amount": "9.965",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x9012ea4e9852cc96f0a2ed17ceacecd754574b2f916af3f1338ed9242ce5a4c4",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "9975000000",
+    "message_amount_raw": "9975000000",
+    "amount": "9.975",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xe5b762163fb6bdde49504e83a59a0f69875ac796b6dac0e6881b546146d7cef9",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "9935000000",
+    "message_amount_raw": "9935000000",
+    "amount": "9.935",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xa13d9830c911a7136c8f9720f72967d77d316a8aa227421d77f37cec769dced7",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "9913500000",
+    "message_amount_raw": "9913500000",
+    "amount": "9.9135",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x9127fd7a23ddd7a0e52a90605d1dc45bf5a8f6b4c08e9d8cbac12d7b02d96570",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "852900000000000000",
+    "message_amount_raw": "852900000000000000",
+    "amount": "0.8529",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x36318f54848b72bdbd95f9672ddc8f7e247980c398f6599d001e9922d0439160",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "852500000000000000",
+    "message_amount_raw": "852500000000000000",
+    "amount": "0.8525",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xaba4d3acfe3f3e83d9ff39227face54ec492948134f9008969338dee7ff01eb3",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "852100000000000000",
+    "message_amount_raw": "852100000000000000",
+    "amount": "0.8521",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x83c73da6024a40756687a17039eb7b6a08ab27b54f487a6c03c3d6c9f1b079e5",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "850700000000000000",
+    "message_amount_raw": "850700000000000000",
+    "amount": "0.8507",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x95c5abcde5946c12e4833559e2ad87fd3e6454b62156112616f41f3fd637d7af",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "850000000000000000",
+    "message_amount_raw": "850000000000000000",
+    "amount": "0.85",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x57da7cec7f462d3953cda64f5d3407d2c026c4cf3ea35174e790bd919563f956",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "846400000000000000",
+    "message_amount_raw": "846400000000000000",
+    "amount": "0.8464",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x33860b04033d2a2634c96718a7495b23eb059232248a29abad3556e2045e18b3",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "162300000000000000",
+    "message_amount_raw": "162300000000000000",
+    "amount": "0.1623",
+    "destination_address": "aleo1aq8nwh7fzlmer8my4s40sp2y2fv72aqr3ajjsmtuzwg0643utups0td2hw",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x0de413237e3497ccfc76660830d6968b42d05887dd629077bccc85ed7bb508d1",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "21100000000000000",
+    "message_amount_raw": "21100000000000000",
+    "amount": "0.0211",
+    "destination_address": "aleo1aq8nwh7fzlmer8my4s40sp2y2fv72aqr3ajjsmtuzwg0643utups0td2hw",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xb6896d7e6fdb3c9aac703b7021617dfdee2362732637d0e48a818739ed03b89c",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "9600000000000000",
+    "message_amount_raw": "9600000000000000",
+    "amount": "0.0096",
+    "destination_address": "aleo1aq8nwh7fzlmer8my4s40sp2y2fv72aqr3ajjsmtuzwg0643utups0td2hw",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xbb1fdbd8e72ebe5356fced5410ce9eb5488777b45ec198520370f62190e6dded",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "849000000000000000",
+    "message_amount_raw": "849000000000000000",
+    "amount": "0.849",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xf2e6bb461951da2e475527df5b4356f6b60e8a493bdf432c72796013b462ed8e",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "380601012372776089",
+    "message_amount_raw": "380601012372776089",
+    "amount": "0.380601012372776089",
+    "destination_address": "aleo12g6jz3skfgkvezxz7g8p5c6afjju4nhunu98wdf2mamg53dwdvxqhju3ud",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xdca803a1be1364f9931c9dc01a04a2b33069cfbf11ef352f3c95969672113290",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "847300000000000000",
+    "message_amount_raw": "847300000000000000",
+    "amount": "0.8473",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x9dacccb24a1cc1aa4c89a32494cc9965b8b4fc1d5138cb2fb78d5350fd77c3e4",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "6000000000000000000",
+    "message_amount_raw": "6000000000000000000",
+    "amount": "6",
+    "destination_address": "aleo1jkhanawwgfqwt3j505nq3v2kn2933w8s4c9d9wr2a2lpqr9r4qqsnfzrqj",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x58948465a985faa05531ac7c0383cd64e06d80ff18972f8300651f6cd4f4bfba",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "830707056126678290",
+    "message_amount_raw": "830707056126678290",
+    "amount": "0.83070705612667829",
+    "destination_address": "aleo1zg4xags46atksfq7pjuuqyppnsklz3zzc0l6xm8zzuc9jzhve5rqxcs3re",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x47ab3badcca45b5248e337f40827a351e3f4e34b2d9999ddb1cb9b1c986eb730",
+    "origin_chain": "hyperevm",
+    "token": "UETH",
+    "amount_raw": "130663699356077208",
+    "message_amount_raw": "130663699356077208",
+    "amount": "0.130663699356077208",
+    "destination_address": "aleo12nw72vd9x4l703fe848dl3gsm4u40l30etuhd979r6a9dgzzggxsn4shqk",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x329bfd58a0f10534e6116301a66586961f453e0f3ed4456bb8a4a70f91f071f6",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "11994965721",
+    "message_amount_raw": "11994965721",
+    "amount": "11.994965721",
+    "destination_address": "aleo14e40dxdqvmyk3x26yjqfdzaz3g247gp59e55x5ntu4px56pw959q239dnh",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x62a47f2f7f4599302b01a8bea8e0fb10ac7a26043aebbf9351b253f46c0334e9",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "845200000000000000",
+    "message_amount_raw": "845200000000000000",
+    "amount": "0.8452",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xc5945ba2cf072ca82040fd2fa0ce7a19b5092c68e3a1c102ab62b5671426de00",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "2241307480042375815",
+    "message_amount_raw": "2241307480042375815",
+    "amount": "2.241307480042375815",
+    "destination_address": "aleo1zg4xags46atksfq7pjuuqyppnsklz3zzc0l6xm8zzuc9jzhve5rqxcs3re",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x12e1fba752c67986930a516e3c9d73d09a75b6600c29197a1a4dc80296933cd8",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "193059589145837514",
+    "message_amount_raw": "193059589145837514",
+    "amount": "0.193059589145837514",
+    "destination_address": "aleo12g6jz3skfgkvezxz7g8p5c6afjju4nhunu98wdf2mamg53dwdvxqhju3ud",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xc9c0f302bee3799474afbfa997ef457b205e0784a8713a17db93d9911f3ef19d",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "2040977861972551056",
+    "message_amount_raw": "2040977861972551056",
+    "amount": "2.040977861972551056",
+    "destination_address": "aleo1zg4xags46atksfq7pjuuqyppnsklz3zzc0l6xm8zzuc9jzhve5rqxcs3re",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x04956fdfea175a2f8df03ae3429915764dcbcc8f50ff1dbfea4949a1e8a22f9c",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "10041000000",
+    "message_amount_raw": "10041000000",
+    "amount": "10.041",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xa1bbc4c08676ec6b42d1f9b2b0c68ddf82a321176d39dc28568129a5574e4e27",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "840500000000000000",
+    "message_amount_raw": "840500000000000000",
+    "amount": "0.8405",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x760ef46b367c5e2e8fa4d3d1e05bc51ce0f45a74d3d63c228e8537a529bcacb4",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "386304066450579412",
+    "message_amount_raw": "386304066450579412",
+    "amount": "0.386304066450579412",
+    "destination_address": "aleo12g6jz3skfgkvezxz7g8p5c6afjju4nhunu98wdf2mamg53dwdvxqhju3ud",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x224a27e14b97d5d2dc357c8cd809890d758be1725f521203e0fed6550a8fa6f7",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "838500000000000000",
+    "message_amount_raw": "838500000000000000",
+    "amount": "0.8385",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xdb78cc124d875d8b9ab7ec4d7199ab7ef61e48fba911a734a46a840bc72f97f3",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "10011000000",
+    "message_amount_raw": "10011000000",
+    "amount": "10.011",
+    "destination_address": "aleo12sv5atglsuf9vmhaql4xnjusja5l2v4vr7vtkh8kpvyaphj9ts8q35r44j",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x3b14879b34c9a5c3d20b3930b29d78ee40f1a7f2326ac4c256095ce890de1493",
+    "origin_chain": "solanamainnet",
+    "token": "SOL",
+    "amount_raw": "100000000000",
+    "message_amount_raw": "100000000000",
+    "amount": "100",
+    "destination_address": "aleo1jkhanawwgfqwt3j505nq3v2kn2933w8s4c9d9wr2a2lpqr9r4qqsnfzrqj",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\xa859e909e61e4bba61d4c25bcb970e6b73a9b1bca0c181dce07b5a2243e6f846",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "836100000000000000",
+    "message_amount_raw": "836100000000000000",
+    "amount": "0.8361",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  },
+  {
+    "msg_id": "\\x0309ca2620bfa490c8c36b50a01283ac20f1a026bdd7f064fd4d747a55afe8d0",
+    "origin_chain": "ethereum",
+    "token": "ETH",
+    "amount_raw": "833700000000000000",
+    "message_amount_raw": "833700000000000000",
+    "amount": "0.8337",
+    "destination_address": "aleo173z69n0ux07x0ctlqyxemkahha95hzkd9euxxscaq0dca8zr8czq7kyq9l",
+    "decode_status": "decoded"
+  }
+]
