@@ -12,7 +12,87 @@ python3 -m venv .venv
 ```
 
 `--offset` selects another page. `--registry-ref` accepts a registry commit or
-branch; each invocation pins route downloads to the resolved commit.
+branch. Registry routes are cached for one hour under `.runtime/registry`,
+separately for each ref; refreshes pin all downloads to one resolved commit.
+An expired cache remains usable during registry outages, with a warning and
+five-minute refresh retries. `--registry-cache-dir` overrides the cache location.
+Hyperlane messages are fetched anew on every invocation.
+
+## Run as a background process
+
+The Bash launcher creates the virtual environment and installs PyYAML if needed.
+It works from any current directory.
+
+```sh
+./run-monitor.sh start --limit 100
+./run-monitor.sh status
+./run-monitor.sh logs
+./run-monitor.sh stop
+```
+
+This waits **10 seconds** after the previous attempt completes and continues
+after fetch errors. The most recent successful result is saved atomically to
+`.runtime/latest.json`; progress and errors append to `.runtime/monitor.log`.
+Each result replaces the previous page. Sender alerts are deduplicated and
+recorded separately, but this process does not archive all transactions or
+guarantee collection of every transaction between polls.
+It survives closing the terminal and stops when the machine shuts down.
+
+Use `--interval SECONDS` to change the delay, or `start --once --limit 100` to
+fetch once in the background and then exit. Use
+`./run-monitor.sh run --limit 100` to run once in the foreground and print JSON.
+`MONITOR_STATE_DIR` can override the runtime directory; use the same value for
+all launcher commands. `status` reports the saved worker PID and last attempt's
+exit code. `stop` sends SIGTERM to the worker and its current child process.
+Background runs keep the registry cache under the chosen runtime directory.
+Restart an existing worker with `stop`, then `start`, to apply the new default.
+
+## Local sender alerts
+
+Sender alerts are enabled by default using the filtered
+`2026-10-29 Binance - ETH SOL HyperEVM Addresses.csv` list. The file is reloaded
+on each poll. The monitor checks both `origin_tx_sender` (the origin transaction
+sender) and `sender` (the Hyperlane message sender, usually a bridge router).
+The alert identifies which field matched. Recipient-only matches do not alert.
+EVM addresses are compared without case sensitivity on Ethereum and HyperEVM;
+Solana addresses are matched by their exact base58-decoded bytes. The list's EVM
+addresses are watched on both EVM chains, regardless of their original CSV label.
+
+On macOS, a match launches a **critical popup**, a notification, and three beeps.
+The popup dismisses automatically after two minutes. Monitoring continues while
+the popup is open. Linux uses `notify-send` when available. A graphical login
+session is required for desktop alerts; sound depends on local audio settings.
+Immediate desktop launch failures remain pending for retry on subsequent polls.
+
+The monitor also prints a large alert banner to stderr (the monitor log when
+running in the background) and saves:
+
+- `.runtime/latest-alert.txt`: full details of the latest alert batch.
+- `.runtime/alerts.jsonl`: an append-only record of detected matches.
+- `.runtime/sender-alerts.sqlite3`: persistent notification state.
+
+Alerts are dispatched once per origin chain, transaction hash, and watched
+address, including across restarts and multiple messages in one transaction.
+A batch of matches produces one popup. Matches already present among the first
+100 fetched messages will alert on startup; the scan is not limited to newly
+sent transactions. Checks run before registry/token decoding, so a registry
+outage or unknown token does not prevent a sender match from alerting.
+Only messages returned by the Aleo-destination query are checked; this does not
+monitor every transaction made by these wallets on their origin chains.
+
+Test the popup and sound locally, without querying the API or recording a fake
+transaction, then inspect any real saved alerts:
+
+```sh
+./run-monitor.sh test-alert
+./run-monitor.sh alerts
+```
+
+Use `--watchlist /path/to/list.csv` to select another list (address in the first
+column; an optional `address` header is accepted), `--no-alerts` to disable
+matching, or `--alert-state-dir /path` to change the alert state location.
+The Bash launcher uses its `MONITOR_STATE_DIR` for alert state in both foreground
+and background runs. Keep that directory across restarts to retain deduplication.
 
 Output retains the API fields and adds `origin_chain`, the origin token's
 `token` symbol, `amount` in origin token units, `amount_raw` in origin atomic

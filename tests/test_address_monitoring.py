@@ -5,6 +5,7 @@ import importlib.util
 import io
 import json
 from pathlib import Path
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -190,9 +191,9 @@ class QueryAndCommandLine(unittest.TestCase):
 
     def test_cli_replays_all_100_transactions(self):
         output = io.StringIO()
-        with patch("sys.argv", ["address-monitoring.py", "--limit", "100"]), \
+        with patch("sys.argv", ["address-monitoring.py", "--limit", "100", "--no-alerts"]), \
              patch.object(monitor, "http", return_value=json.dumps({"data": DATA})), \
-             patch.object(monitor, "load_routes", return_value=CONFIGS), \
+             patch.object(monitor, "cached_routes", return_value=CONFIGS), \
              contextlib.redirect_stdout(output):
             self.assertEqual(monitor.main(), 0)
         actual = json.loads(output.getvalue())
@@ -201,12 +202,79 @@ class QueryAndCommandLine(unittest.TestCase):
 
     def test_cli_reports_errors_without_json_on_stdout(self):
         output, errors = io.StringIO(), io.StringIO()
-        with patch("sys.argv", ["address-monitoring.py"]), \
+        with patch("sys.argv", ["address-monitoring.py", "--no-alerts"]), \
              patch.object(monitor, "http", side_effect=OSError("network unavailable")), \
              contextlib.redirect_stdout(output), contextlib.redirect_stderr(errors):
             self.assertEqual(monitor.main(), 1)
         self.assertEqual(output.getvalue(), "")
         self.assertIn("network unavailable", errors.getvalue())
+
+
+class RegistryCache(unittest.TestCase):
+    def setUp(self):
+        self.directory = tempfile.TemporaryDirectory()
+        self.addCleanup(self.directory.cleanup)
+        self.cache_dir = Path(self.directory.name)
+
+    def test_repeated_polls_fetch_registry_once(self):
+        with patch.object(monitor, "load_routes", return_value=CONFIGS) as fetch:
+            for _ in range(3):
+                self.assertEqual(monitor.cached_routes("main", self.cache_dir), CONFIGS)
+        fetch.assert_called_once_with("main")
+        self.assertEqual(len(list(self.cache_dir.iterdir())), 1)
+
+    def test_expired_cache_refreshes(self):
+        with patch.object(monitor.time, "time", return_value=1000), \
+             patch.object(monitor, "load_routes", return_value=CONFIGS):
+            monitor.cached_routes("main", self.cache_dir)
+        updated = CONFIGS[:1]
+        with patch.object(monitor.time, "time", return_value=4600), \
+             patch.object(monitor, "load_routes", return_value=updated) as fetch:
+            self.assertEqual(monitor.cached_routes("main", self.cache_dir), updated)
+        fetch.assert_called_once_with("main")
+
+    def test_registry_refs_have_separate_caches(self):
+        with patch.object(monitor, "load_routes", return_value=CONFIGS) as fetch:
+            monitor.cached_routes("main", self.cache_dir)
+            monitor.cached_routes("a-specific-commit", self.cache_dir)
+            monitor.cached_routes("main", self.cache_dir)
+        self.assertEqual(fetch.call_count, 2)
+
+    def test_corrupt_cache_is_replaced(self):
+        with patch.object(monitor, "load_routes", return_value=CONFIGS):
+            monitor.cached_routes("main", self.cache_dir)
+        path = next(self.cache_dir.iterdir())
+        for invalid in ('{incomplete', 'null', '{"ref": "main", "routes": []}'):
+            path.write_text(invalid)
+            with self.subTest(invalid=invalid), \
+                 patch.object(monitor, "load_routes", return_value=CONFIGS) as fetch:
+                self.assertEqual(monitor.cached_routes("main", self.cache_dir), CONFIGS)
+                fetch.assert_called_once()
+
+    def test_refresh_failure_retains_cache_and_backs_off(self):
+        with patch.object(monitor.time, "time", return_value=1000), \
+             patch.object(monitor, "load_routes", return_value=CONFIGS):
+            monitor.cached_routes("main", self.cache_dir)
+        errors = io.StringIO()
+        with patch.object(monitor.time, "time", return_value=5000), \
+             patch.object(monitor, "load_routes", side_effect=OSError("offline")) as fetch, \
+             contextlib.redirect_stderr(errors):
+            self.assertEqual(monitor.cached_routes("main", self.cache_dir), CONFIGS)
+            self.assertEqual(monitor.cached_routes("main", self.cache_dir), CONFIGS)
+            fetch.assert_called_once()
+        self.assertIn("using cached routes", errors.getvalue())
+        stored = json.loads(next(self.cache_dir.iterdir()).read_text())
+        self.assertEqual(stored["fetched_at"], 1000)
+        with patch.object(monitor.time, "time", return_value=5300), \
+             patch.object(monitor, "load_routes", return_value=CONFIGS) as fetch:
+            monitor.cached_routes("main", self.cache_dir)
+            fetch.assert_called_once()
+
+    def test_initial_fetch_failure_is_reported(self):
+        with patch.object(monitor, "load_routes", side_effect=OSError("offline")):
+            with self.assertRaisesRegex(OSError, "offline"):
+                monitor.cached_routes("main", self.cache_dir)
+        self.assertEqual(list(self.cache_dir.iterdir()), [])
 
 
 if __name__ == "__main__":

@@ -8,8 +8,10 @@ from datetime import datetime, timezone
 import importlib.util
 import json
 from pathlib import Path
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 spec = importlib.util.spec_from_file_location("monitor", ROOT / "address-monitoring.py")
 monitor = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(monitor)

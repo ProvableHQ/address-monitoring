@@ -1,0 +1,14 @@
+0x5227f603C1eE34CE3C06eFe6477003BDfCCB2f8c,high conf,"Primary, Frozen by Tether (971,149,299.48 USDT) and Circle (823,000,000.00 USDC)",Eth,197169 ETH
+0x9749292D74Fd460982d0912eA9515EA24736C762,high conf, Frozen by Tether (zero balance),Eth,
+0x0Ddf0480016e6bCb2C1F5d190D221FBA1320697e,high conf, Frozen by Tether (zero balance),Eth,
+0x8d53903625b8e839b9DF4bd28B0EFb1CD6b8639A,high conf,"Frozen by Tether (130,000,000.00 USDT)",Eth,
+0x77EDEf23FBd05921c26FE29fcc3A65e14D2ac3eb,high conf,,Eth,
+0x811f15855476156ebf86ba3b84fafb8ceaa4e84c,high conf,,Eth,
+0x8532fa14acaf483729c449b8458aeddb900543d4,high conf,,Eth,
+0x7f9DC988B46336aD536828fAD50fa8fA1E5415E3,high conf,,Eth,
+0xc887aF690E0301CD4edBbCe8F8d31b4EC65B286A,high conf,,Eth,
+AffzFDKZbyMiU11zmVBoAqD25ugpr7xoWWyRyGigBEaU,high conf,,Solana,970521.9 SOL
+0x7c8601d4645b93cea45f71e118a729332e6b5ca0,slopped,Sender of sweep transaction,Eth,
+0x5c23023ca6633f91ded909b4a753a3ca00fea4fc,slopped,Received 0.5 ETH only from 0x9749...c762; weaker gas-funding link,Eth,
+0x63e842b054bd624a465454d533c33f573e9c6fae,slopped,Delegated implementation at Binance 14 and deployed by sweep sender,Eth,
+0x19bee294a6daab49c9e5ab69a5da6c035c70f2bf,slopped,Earlier contract deployed by same sweep sender; role unverified,Eth,

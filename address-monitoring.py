@@ -9,12 +9,21 @@ Unknown routes remain in the output with null token/amount and a decode_status.
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor
+import hashlib
 import json
+import os
+from pathlib import Path
+import sqlite3
 import sys
+import tempfile
+import time
 from urllib.request import Request, urlopen
 from urllib.parse import quote
 
 import yaml
+
+from sender_alerts import (DEFAULT_STATE_DIR, DEFAULT_WATCHLIST, check_senders,
+                           load_watchlist, print_banner, show_local_alert)
 
 API = "https://explorer-api.hyperlane.xyz/graphql"
 REPO = "hyperlane-xyz/hyperlane-registry"
@@ -160,6 +169,50 @@ def load_routes(ref="main"):
         return list(pool.map(fetch, paths))
 
 
+def cached_routes(ref, cache_dir, max_age=3600):
+    """Share the registry between one-shot polls; refresh at most hourly."""
+    cache_path = Path(cache_dir) / (hashlib.sha256(ref.encode()).hexdigest() + ".json")
+    cached = None
+    try:
+        entry = json.loads(cache_path.read_text())
+        if (isinstance(entry, dict) and entry.get("ref") == ref
+                and isinstance(entry.get("fetched_at"), (int, float))
+                and isinstance(entry.get("routes"), list) and entry["routes"]
+                and all(isinstance(route, dict) and isinstance(route.get("tokens"), list)
+                        and route["tokens"] for route in entry["routes"])):
+            cached = entry
+    except (OSError, ValueError):
+        pass
+    if cached and 0 <= time.time() - cached["fetched_at"] < max_age:
+        return cached["routes"]
+    if (cached and isinstance(cached.get("retry_after"), (int, float))
+            and time.time() < cached["retry_after"]):
+        print("Registry refresh deferred; using cached routes", file=sys.stderr)
+        return cached["routes"]
+    # Record the attempt before fetching so an outage doesn't trigger a GitHub
+    # request on every message poll. The last known routes remain available.
+    attempted_at = time.time()
+    try:
+        routes = load_routes(ref)
+        entry = {"ref": ref, "fetched_at": time.time(), "routes": routes}
+    except (OSError, ValueError, KeyError, yaml.YAMLError) as error:
+        if cached is None:
+            raise
+        print(f"Registry refresh failed; using cached routes: {error}", file=sys.stderr)
+        entry = dict(cached, retry_after=attempted_at + 300)
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    temp_path = None
+    try:
+        with tempfile.NamedTemporaryFile(mode="w", dir=cache_path.parent, delete=False) as output:
+            temp_path = Path(output.name)
+            json.dump(entry, output)
+        os.replace(temp_path, cache_path)
+    finally:
+        if temp_path is not None:
+            temp_path.unlink(missing_ok=True)
+    return entry["routes"]
+
+
 def route_index(routes, domains):
     names = {domain["name"]: domain["id"] for domain in domains}
     index = {}
@@ -249,13 +302,29 @@ def main():
     parser.add_argument("--limit", type=int, default=100)
     parser.add_argument("--offset", type=int, default=0)
     parser.add_argument("--registry-ref", default="main")
+    parser.add_argument("--registry-cache-dir", type=Path,
+                        default=Path(__file__).resolve().parent / ".runtime" / "registry")
+    parser.add_argument("--watchlist", type=Path, default=DEFAULT_WATCHLIST)
+    parser.add_argument("--alert-state-dir", type=Path, default=DEFAULT_STATE_DIR)
+    alert_mode = parser.add_mutually_exclusive_group()
+    alert_mode.add_argument("--no-alerts", action="store_true", help="Disable sender watchlist alerts")
+    alert_mode.add_argument("--test-alert", action="store_true", help="Show a local test alert without querying the API")
     args = parser.parse_args()
     try:
+        if args.test_alert:
+            title = "TEST: ALEO BRIDGE SENDER ALERT"
+            message = "Local alert test. No real transaction or watchlist match."
+            print_banner(title, message)
+            return 0 if show_local_alert(title, message) else 1
+        watchlist = None if args.no_alerts else load_watchlist(args.watchlist)
         data = fetch_messages(args.limit, args.offset)
-        routes = route_index(load_routes(args.registry_ref), data["domain"])
+        if watchlist is not None:
+            # Alert even when token enrichment or the registry is unavailable.
+            check_senders(data["message_view"], watchlist, args.alert_state_dir)
+        routes = route_index(cached_routes(args.registry_ref, args.registry_cache_dir), data["domain"])
         domains = {d["id"]: d["name"] for d in data["domain"]}
         print(json.dumps([enrich_message(m, routes, domains) for m in data["message_view"]], indent=2))
-    except (OSError, ValueError, KeyError, yaml.YAMLError) as error:
+    except (OSError, ValueError, KeyError, sqlite3.Error, yaml.YAMLError) as error:
         print(str(error), file=sys.stderr)
         return 1
     return 0
