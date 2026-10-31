@@ -21,6 +21,7 @@ Usage: ./run-monitor.sh COMMAND [OPTIONS]
   logs                                 Follow the background log (Ctrl-C to exit).
   alerts                               Show the latest saved sender alert.
   test-alert                           Show a local test popup and sound.
+  test-slack                           Send a labeled Slack test message.
 
 Examples:
   ./run-monitor.sh run --limit 100
@@ -139,6 +140,10 @@ case "$action" in
     test-alert)
         setup
         exec "$PYTHON" -u "$ROOT/address-monitoring.py" --test-alert
+        ;;
+    test-slack)
+        setup
+        exec "$PYTHON" -u "$ROOT/address-monitoring.py" --test-slack
         ;;
     alerts)
         if [[ -f "$STATE_DIR/latest-alert.txt" ]]; then

@@ -4,10 +4,8 @@ from contextlib import closing
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 import json
-import os
 from pathlib import Path
 import random
-import shlex
 import sqlite3
 import sys
 import time
@@ -16,9 +14,9 @@ from urllib.parse import urljoin, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from sender_alerts import ALEO_DOMAIN, check_senders, hex_bytes, sender_matches, watch_address
+from monitor_config import ENV_FILE, secret_value
 
 API = "https://api.merklescience.com/api/v4.2/addresses/"
-ENV_FILE = Path(__file__).resolve().parent / ".env"
 KEY_NAME = "MERKLE_SCIENCE_API_KEY"
 
 
@@ -29,19 +27,8 @@ class MerkleAPIError(ValueError):
 
 
 def load_api_key(env_file=ENV_FILE):
-    value = os.environ.get(KEY_NAME)
-    if value is None and Path(env_file).is_file():
-        for line in Path(env_file).read_text().splitlines():
-            name, separator, raw = line.strip().removeprefix("export ").partition("=")
-            if separator and name.strip() == KEY_NAME:
-                try:
-                    tokens = shlex.split(raw, comments=True)
-                except ValueError:
-                    raise ValueError(f"Invalid {KEY_NAME} entry in .env") from None
-                if len(tokens) != 1:
-                    raise ValueError(f"Invalid {KEY_NAME} entry in .env")
-                value = tokens[0]
-    if not value or not value.strip() or any(c in value for c in "\r\n"):
+    value = secret_value(KEY_NAME, env_file)
+    if not value:
         raise ValueError(f"Set {KEY_NAME} in the environment or local .env, or use --no-merkle")
     return value.strip()
 
@@ -175,7 +162,8 @@ def register_message(connection, message, status="pending"):
                            (domain, tx_hash, json.dumps([message]), status))
 
 
-def screen_new_transactions(fetch_page, api_key, state_dir, observed_messages=()):
+def screen_new_transactions(fetch_page, api_key, state_dir, observed_messages=(), slack_webhook_url=None,
+                            enrich_message=None):
     """Baseline once, durably queue new IDs, then perform one list fetch per tx."""
     state_dir = Path(state_dir)
     state_dir.mkdir(parents=True, exist_ok=True)
@@ -232,8 +220,11 @@ def screen_new_transactions(fetch_page, api_key, state_dir, observed_messages=()
                 records = fetch_addresses(api_key)
                 watchlist, details = filtered_watchlist(records)
                 messages = json.loads(row[2])
+                if enrich_message is not None:
+                    messages = [enrich_message(message) for message in messages]
                 count = len(sender_matches(messages, watchlist))
-                check_senders(messages, watchlist, state_dir, source="merkle_science", details=details)
+                check_senders(messages, watchlist, state_dir, source="merkle_science", details=details,
+                              slack_webhook_url=slack_webhook_url)
             except MerkleAPIError as error:
                 failures = meta_get(connection, "failures", 0) + 1
                 delay = max(error.retry_after, min(300, 5 * 2 ** min(failures - 1, 6)) + random.uniform(0, 1))

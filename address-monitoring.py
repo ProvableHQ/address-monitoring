@@ -22,9 +22,10 @@ from urllib.parse import quote
 
 import yaml
 
-from sender_alerts import (DEFAULT_STATE_DIR, DEFAULT_WATCHLIST, check_senders,
-                           load_watchlist, print_banner, show_local_alert)
+from sender_alerts import (DEFAULT_STATE_DIR, DEFAULT_WATCHLIST, TITLE, check_senders,
+                           load_watchlist, print_banner, retry_pending_alerts, show_local_alert)
 from merkle_screening import load_api_key, screen_new_transactions
+from slack_alerts import load_webhook_url, send_webhook
 
 API = "https://explorer-api.hyperlane.xyz/graphql"
 REPO = "hyperlane-xyz/hyperlane-registry"
@@ -320,25 +321,47 @@ def main():
     alert_mode = parser.add_mutually_exclusive_group()
     alert_mode.add_argument("--no-alerts", action="store_true", help="Disable sender watchlist alerts")
     alert_mode.add_argument("--test-alert", action="store_true", help="Show a local test alert without querying the API")
+    alert_mode.add_argument("--test-slack", action="store_true", help="Send a labeled test message to the configured Slack webhook")
     args = parser.parse_args()
     try:
         if args.test_alert:
-            title = "TEST: ALEO BRIDGE SENDER ALERT"
+            title = TITLE + " (TEST)"
             message = "Local alert test. No real transaction or watchlist match."
             print_banner(title, message)
             return 0 if show_local_alert(title, message) else 1
+        if args.test_slack:
+            webhook_url = load_webhook_url()
+            if webhook_url is None:
+                raise ValueError("Set SLACK_WEBHOOK_URL in the environment or local .env")
+            send_webhook(webhook_url, TITLE + " (TEST)",
+                         ["Slack alert delivery test. No real transaction or watchlist match."])
+            print("Slack test message delivered.", file=sys.stderr)
+            return 0
         watchlist = None if args.no_alerts else load_watchlist(args.watchlist)
         api_key = None if args.no_alerts or args.no_merkle else load_api_key()
-        data = fetch_messages(args.limit, args.offset)
+        webhook_url = None if args.no_alerts else load_webhook_url()
         if watchlist is not None:
-            # Alert even when token enrichment or the registry is unavailable.
-            check_senders(data["message_view"], watchlist, args.alert_state_dir)
+            retry_pending_alerts(args.alert_state_dir, slack_webhook_url=webhook_url)
+        data = fetch_messages(args.limit, args.offset)
+        domains = {d["id"]: d["name"] for d in data["domain"]}
+        registry_error = None
+        try:
+            routes = route_index(cached_routes(args.registry_ref, args.registry_cache_dir), data["domain"])
+        except (OSError, ValueError, KeyError, yaml.YAMLError) as error:
+            routes, registry_error = {}, error
+        def enrich(message):
+            return enrich_message(message, routes, domains)
+        enriched_messages = [enrich(m) for m in data["message_view"]]
+        if watchlist is not None:
+            # Unknown transfer details must not suppress a signer match.
+            check_senders(enriched_messages, watchlist, args.alert_state_dir, slack_webhook_url=webhook_url)
         if api_key is not None:
             screen_new_transactions(fetch_messages, api_key, args.alert_state_dir,
-                                    observed_messages=data["message_view"])
-        routes = route_index(cached_routes(args.registry_ref, args.registry_cache_dir), data["domain"])
-        domains = {d["id"]: d["name"] for d in data["domain"]}
-        print(json.dumps([enrich_message(m, routes, domains) for m in data["message_view"]], indent=2))
+                                    observed_messages=data["message_view"], slack_webhook_url=webhook_url,
+                                    enrich_message=enrich)
+        if registry_error is not None:
+            raise registry_error
+        print(json.dumps(enriched_messages, indent=2))
     except (OSError, ValueError, KeyError, sqlite3.Error, yaml.YAMLError) as error:
         print(str(error), file=sys.stderr)
         return 1

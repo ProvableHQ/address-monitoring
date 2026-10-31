@@ -7,7 +7,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import ANY, patch
 
 import sender_alerts as alerts
 
@@ -53,17 +53,18 @@ class SenderMatching(unittest.TestCase):
         message["origin_tx_sender"] = "\\x" + alerts.watch_address(different_case)[1].hex()
         self.assertEqual(alerts.sender_matches([message], self.watchlist), [])
 
-    def test_literal_message_sender_also_triggers_and_is_identified(self):
+    def test_router_only_match_does_not_trigger(self):
         message = dict(self.message, origin_tx_sender="0x" + "11" * 20, sender=EVM)
         matches = alerts.sender_matches([message], self.watchlist)
-        self.assertEqual(matches[0]["matched_fields"], ["sender"])
+        self.assertEqual(matches, [])
 
     def test_both_sender_fields_and_multiple_messages_in_one_tx_coalesce(self):
         message = dict(self.message, sender=EVM)
         second = dict(message, msg_id="0x" + "ab" * 32)
         matches = alerts.sender_matches([message, second], self.watchlist)
         self.assertEqual(len(matches), 1)
-        self.assertEqual(matches[0]["matched_fields"], ["origin_tx_sender", "sender"])
+        self.assertEqual(matches[0]["matched_fields"], ["origin_tx_sender"])
+        self.assertEqual(len(matches[0]["transfers"]), 2)
 
     def test_recipient_match_does_not_trigger(self):
         message = dict(self.message, origin_tx_sender="0x" + "11" * 20,
@@ -124,7 +125,7 @@ class AlertPersistence(unittest.TestCase):
         saved = json.loads((self.state / "alerts.jsonl").read_text())
         self.assertEqual(saved["address"], EVM)
         self.assertEqual(saved["matched_fields"], ["origin_tx_sender"])
-        self.assertIn(EVM, (self.state / "latest-alert.txt").read_text())
+        self.assertIn(EVM.lower(), (self.state / "latest-alert.txt").read_text())
         self.assertIn(alerts.TITLE, self.stderr.getvalue())
 
     def test_new_transaction_for_same_address_alerts_again(self):
@@ -164,6 +165,14 @@ class AlertPersistence(unittest.TestCase):
 
 
 class DesktopAndCLI(unittest.TestCase):
+    def setUp(self):
+        webhook = patch.object(monitor, "load_webhook_url", return_value=None)
+        pending = patch.object(monitor, "retry_pending_alerts")
+        webhook.start()
+        pending.start()
+        self.addCleanup(webhook.stop)
+        self.addCleanup(pending.stop)
+
     def test_macos_arguments_are_data_and_popup_does_not_block_polling(self):
         with patch.object(alerts.sys, "platform", "darwin"), \
              patch.object(alerts.subprocess, "Popen") as popen:
@@ -189,7 +198,7 @@ class DesktopAndCLI(unittest.TestCase):
             self.assertFalse(alerts.show_local_alert("TEST", "test"))
         self.assertIn("unavailable", errors.getvalue())
 
-    def test_cli_checks_senders_before_registry_enrichment(self):
+    def test_cli_still_checks_signers_when_registry_is_unavailable(self):
         output, errors = io.StringIO(), io.StringIO()
         with patch("sys.argv", ["address-monitoring.py", "--no-merkle"]), \
              patch.object(monitor, "fetch_messages", return_value=SAMPLE), \
@@ -198,7 +207,9 @@ class DesktopAndCLI(unittest.TestCase):
              contextlib.redirect_stdout(output), contextlib.redirect_stderr(errors):
             self.assertEqual(monitor.main(), 1)
         check.assert_called_once()
-        self.assertEqual(check.call_args.args[0], SAMPLE["message_view"])
+        checked = check.call_args.args[0]
+        self.assertEqual([m["msg_id"] for m in checked], [m["msg_id"] for m in SAMPLE["message_view"]])
+        self.assertTrue(all(m["amount"] is None for m in checked))
 
     def test_cli_alert_preserves_json_and_deduplicates_across_runs(self):
         data = copy.deepcopy(SAMPLE)
@@ -217,7 +228,7 @@ class DesktopAndCLI(unittest.TestCase):
                 self.assertEqual(len(json.loads(output.getvalue())), 100)
             popup.assert_called_once()
             self.assertEqual(len((Path(directory) / "alerts.jsonl").read_text().splitlines()), 1)
-        self.assertIn(EVM, errors.getvalue())
+        self.assertIn(EVM.lower(), errors.getvalue())
 
     def test_test_alert_does_not_query_network_or_record_fake_matches(self):
         errors = io.StringIO()
@@ -229,7 +240,20 @@ class DesktopAndCLI(unittest.TestCase):
             self.assertEqual(monitor.main(), 0)
         http.assert_not_called()
         check.assert_not_called()
-        self.assertTrue(popup.call_args.args[0].startswith("TEST:"))
+        self.assertEqual(popup.call_args.args[0], alerts.TITLE + " (TEST)")
+
+    def test_test_slack_only_sends_labeled_message_without_api_queries(self):
+        errors = io.StringIO()
+        with patch("sys.argv", ["address-monitoring.py", "--test-slack"]), \
+             patch.object(monitor, "load_webhook_url", return_value="https://hooks.slack.com/services/TEST/TEST/TEST"), \
+             patch.object(monitor, "send_webhook") as send, \
+             patch.object(monitor, "http") as http, \
+             patch.object(monitor, "check_senders") as check, \
+             contextlib.redirect_stderr(errors):
+            self.assertEqual(monitor.main(), 0)
+        http.assert_not_called()
+        check.assert_not_called()
+        self.assertEqual(send.call_args.args[1], alerts.TITLE + " (TEST)")
 
     def test_invalid_watchlist_fails_before_network_request(self):
         errors = io.StringIO()
@@ -262,7 +286,8 @@ class DesktopAndCLI(unittest.TestCase):
              contextlib.redirect_stdout(output):
             self.assertEqual(monitor.main(), 0)
         screen.assert_called_once_with(fetch, "test-key", Path(directory),
-                                       observed_messages=SAMPLE["message_view"])
+                                       observed_messages=SAMPLE["message_view"], slack_webhook_url=None,
+                                       enrich_message=ANY)
 
     def test_merkle_failure_is_not_reported_as_successful_clean_scan(self):
         output, errors = io.StringIO(), io.StringIO()
