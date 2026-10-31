@@ -24,6 +24,7 @@ import yaml
 
 from sender_alerts import (DEFAULT_STATE_DIR, DEFAULT_WATCHLIST, check_senders,
                            load_watchlist, print_banner, show_local_alert)
+from merkle_screening import load_api_key, screen_new_transactions
 
 API = "https://explorer-api.hyperlane.xyz/graphql"
 REPO = "hyperlane-xyz/hyperlane-registry"
@@ -281,13 +282,22 @@ def enrich_message(message, routes, domains):
     return result
 
 
-def fetch_messages(limit=100, offset=0):
+def fetch_messages(limit=100, offset=0, *, after_id=None, id_order=None):
     if limit < 1 or offset < 0:
         raise ValueError("limit must be positive and offset must be nonnegative")
+    where = {"destination_domain_id": {"_eq": ALEO_DOMAIN}}
+    if after_id is not None:
+        if type(after_id) is not int or after_id < 0:
+            raise ValueError("after_id must be a nonnegative integer")
+        where["id"] = {"_gt": str(after_id)}
+    query = QUERY
+    if id_order is not None:
+        if id_order not in ("asc", "desc"):
+            raise ValueError("id_order must be asc or desc")
+        query = query.replace("[{send_occurred_at: desc}, {id: desc}]", "[{id: " + id_order + "}]")
     response = json.loads(http(API, {
-        "query": QUERY,
-        "variables": {"limit": limit, "offset": offset,
-                      "where": {"destination_domain_id": {"_eq": ALEO_DOMAIN}}},
+        "query": query,
+        "variables": {"limit": limit, "offset": offset, "where": where},
     }))
     if response.get("errors"):
         raise ValueError("Hyperlane GraphQL error: " + json.dumps(response["errors"]))
@@ -306,6 +316,7 @@ def main():
                         default=Path(__file__).resolve().parent / ".runtime" / "registry")
     parser.add_argument("--watchlist", type=Path, default=DEFAULT_WATCHLIST)
     parser.add_argument("--alert-state-dir", type=Path, default=DEFAULT_STATE_DIR)
+    parser.add_argument("--no-merkle", action="store_true", help="Disable Merkle Science screening; keep CSV alerts")
     alert_mode = parser.add_mutually_exclusive_group()
     alert_mode.add_argument("--no-alerts", action="store_true", help="Disable sender watchlist alerts")
     alert_mode.add_argument("--test-alert", action="store_true", help="Show a local test alert without querying the API")
@@ -317,10 +328,14 @@ def main():
             print_banner(title, message)
             return 0 if show_local_alert(title, message) else 1
         watchlist = None if args.no_alerts else load_watchlist(args.watchlist)
+        api_key = None if args.no_alerts or args.no_merkle else load_api_key()
         data = fetch_messages(args.limit, args.offset)
         if watchlist is not None:
             # Alert even when token enrichment or the registry is unavailable.
             check_senders(data["message_view"], watchlist, args.alert_state_dir)
+        if api_key is not None:
+            screen_new_transactions(fetch_messages, api_key, args.alert_state_dir,
+                                    observed_messages=data["message_view"])
         routes = route_index(cached_routes(args.registry_ref, args.registry_cache_dir), data["domain"])
         domains = {d["id"]: d["name"] for d in data["domain"]}
         print(json.dumps([enrich_message(m, routes, domains) for m in data["message_view"]], indent=2))

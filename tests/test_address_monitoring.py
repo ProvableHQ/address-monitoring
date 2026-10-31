@@ -189,6 +189,14 @@ class QueryAndCommandLine(unittest.TestCase):
         with patch.object(monitor, "http", return_value=json.dumps({"data": data})):
             self.assertEqual(monitor.fetch_messages(), data)
 
+    def test_new_transaction_query_uses_id_cursor_and_stable_order(self):
+        with patch.object(monitor, "http", return_value=json.dumps({"data": DATA})) as http:
+            monitor.fetch_messages(limit=100, after_id=123, id_order="asc")
+        payload = http.call_args.args[1]
+        self.assertEqual(payload["variables"]["where"], {
+            "destination_domain_id": {"_eq": monitor.ALEO_DOMAIN}, "id": {"_gt": "123"}})
+        self.assertIn("order_by: [{id: asc}]", payload["query"])
+
     def test_cli_replays_all_100_transactions(self):
         output = io.StringIO()
         with patch("sys.argv", ["address-monitoring.py", "--limit", "100", "--no-alerts"]), \

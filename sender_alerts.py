@@ -118,7 +118,12 @@ def sender_matches(messages, watchlist):
 def alert_text(alerts):
     blocks = []
     for alert in alerts:
+        risk = alert.get("risk") or {}
+        source_text = "Merkle Science address list" if alert.get("source") == "merkle_science" else "CSV watchlist"
+        risk_text = (f"Risk reported: {risk.get('risk_level_verbose')} ({risk.get('risk_level')})\n"
+                     if risk else "")
         blocks.append(
+            f"Source: {source_text}\n" + risk_text +
             f"Chain: {alert['origin_chain']} -> Aleo\n"
             f"Sender: {alert['address']}\n"
             f"Matched field(s): {', '.join(alert['matched_fields'])}\n"
@@ -162,7 +167,7 @@ def print_banner(title, message):
     return banner
 
 
-def check_senders(messages, watchlist, state_dir):
+def check_senders(messages, watchlist, state_dir, source="csv", details=None):
     """Record matches, notify once, and retry alerts that could not be launched."""
     matches = sender_matches(messages, watchlist)
     state_dir = Path(state_dir)
@@ -171,18 +176,26 @@ def check_senders(messages, watchlist, state_dir):
         return 0
     state_dir.mkdir(parents=True, exist_ok=True)
     with closing(sqlite3.connect(database, timeout=10)) as connection, connection:
+        connection.execute("BEGIN IMMEDIATE")
+        columns = [row[1] for row in connection.execute("PRAGMA table_info(alerts)")]
+        if columns and "source" not in columns:
+            connection.execute("ALTER TABLE alerts RENAME TO legacy_alerts")
         connection.execute('''CREATE TABLE IF NOT EXISTS alerts (
-            origin_domain INTEGER, tx_hash TEXT, address_key TEXT,
+            source TEXT NOT NULL, origin_domain INTEGER, tx_hash TEXT, address_key TEXT,
             payload TEXT NOT NULL, notified INTEGER NOT NULL DEFAULT 0,
-            PRIMARY KEY (origin_domain, tx_hash, address_key)
+            PRIMARY KEY (source, origin_domain, tx_hash, address_key)
         )''')
+        if columns and "source" not in columns:
+            connection.execute("INSERT INTO alerts SELECT 'csv', origin_domain, tx_hash, address_key, payload, notified FROM legacy_alerts")
+            connection.execute("DROP TABLE legacy_alerts")
         now = datetime.now(timezone.utc).isoformat()
         new_alerts = []
         for match in matches:
-            payload = dict(match, detected_at=now)
+            key = (CHAINS[match["origin_domain_id"]][0], bytes.fromhex(match["address_key"]))
+            payload = dict(match, detected_at=now, source=source, risk=(details or {}).get(key))
             inserted = connection.execute(
-                "INSERT OR IGNORE INTO alerts (origin_domain, tx_hash, address_key, payload) VALUES (?, ?, ?, ?)",
-                (match["origin_domain_id"], match["origin_tx_hash"], match["address_key"], json.dumps(payload)))
+                "INSERT OR IGNORE INTO alerts (source, origin_domain, tx_hash, address_key, payload) VALUES (?, ?, ?, ?, ?)",
+                (source, match["origin_domain_id"], match["origin_tx_hash"], match["address_key"], json.dumps(payload)))
             if inserted.rowcount:
                 new_alerts.append(payload)
         connection.commit()
@@ -194,10 +207,10 @@ def check_senders(messages, watchlist, state_dir):
         # background polls using the same local state directory.
         connection.execute("BEGIN IMMEDIATE")
         pending = connection.execute(
-            "SELECT origin_domain, tx_hash, address_key, payload FROM alerts WHERE notified = 0").fetchall()
+            "SELECT source, origin_domain, tx_hash, address_key, payload FROM alerts WHERE notified = 0").fetchall()
         if not pending:
             return 0
-        alerts = [json.loads(row[3]) for row in pending]
+        alerts = [json.loads(row[4]) for row in pending]
         text = alert_text(alerts)
         (state_dir / "latest-alert.txt").write_text(TITLE + "\n\n" + text + "\n", encoding="utf-8")
         print_banner(TITLE, text)
@@ -207,7 +220,7 @@ def check_senders(messages, watchlist, state_dir):
             popup_text += f"\n\n{len(alerts) - 3} more matches. See {state_dir / 'latest-alert.txt'}"
         if show_local_alert(TITLE, popup_text):
             connection.executemany(
-                "UPDATE alerts SET notified = 1 WHERE origin_domain = ? AND tx_hash = ? AND address_key = ?",
-                [row[:3] for row in pending])
+                "UPDATE alerts SET notified = 1 WHERE source = ? AND origin_domain = ? AND tx_hash = ? AND address_key = ?",
+                [row[:4] for row in pending])
             connection.commit()
         return len(alerts)

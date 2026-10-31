@@ -33,9 +33,9 @@ It works from any current directory.
 This waits **10 seconds** after the previous attempt completes and continues
 after fetch errors. The most recent successful result is saved atomically to
 `.runtime/latest.json`; progress and errors append to `.runtime/monitor.log`.
-Each result replaces the previous page. Sender alerts are deduplicated and
-recorded separately, but this process does not archive all transactions or
-guarantee collection of every transaction between polls.
+Each JSON result replaces the previous page. Sender alerts and Merkle Science
+screening records are stored separately. The API's indexing availability still
+limits what can be observed; polling does not guarantee instantaneous data.
 It survives closing the terminal and stops when the machine shuts down.
 
 Use `--interval SECONDS` to change the delay, or `start --once --limit 100` to
@@ -71,11 +71,10 @@ running in the background) and saves:
 - `.runtime/alerts.jsonl`: an append-only record of detected matches.
 - `.runtime/sender-alerts.sqlite3`: persistent notification state.
 
-Alerts are dispatched once per origin chain, transaction hash, and watched
+Alerts are dispatched once per source, origin chain, transaction hash, and watched
 address, including across restarts and multiple messages in one transaction.
-A batch of matches produces one popup. Matches already present among the first
-100 fetched messages will alert on startup; the scan is not limited to newly
-sent transactions. Checks run before registry/token decoding, so a registry
+A batch of matches produces one popup. CSV matches already present among the first
+100 fetched messages will alert on startup. Checks run before registry/token decoding, so a registry
 outage or unknown token does not prevent a sender match from alerting.
 Only messages returned by the Aleo-destination query are checked; this does not
 monitor every transaction made by these wallets on their origin chains.
@@ -89,10 +88,63 @@ transaction, then inspect any real saved alerts:
 ```
 
 Use `--watchlist /path/to/list.csv` to select another list (address in the first
-column; an optional `address` header is accepted), `--no-alerts` to disable
-matching, or `--alert-state-dir /path` to change the alert state location.
+column; an optional `address` header is accepted), `--no-alerts` to disable both
+CSV alerts and Merkle screening, or `--alert-state-dir /path` to change state location.
 The Bash launcher uses its `MONITOR_STATE_DIR` for alert state in both foreground
 and background runs. Keep that directory across restarts to retain deduplication.
+
+## Merkle Science screening for new transactions
+
+Merkle Science screening is enabled by default alongside the CSV watchlist.
+Set `MERKLE_SCIENCE_API_KEY` in the environment or in a local `.env` file:
+
+```dotenv
+MERKLE_SCIENCE_API_KEY=your-api-key
+```
+
+The `.env` file is ignored by Git and read as data without executing shell
+commands. An environment variable takes precedence. The key is sent only as
+the `X-API-KEY` header to the Merkle Science API, never logged or stored in
+screening records. Missing credentials produce an explicit configuration error.
+Use `--no-merkle` to keep only CSV alerts.
+
+On the first run, the monitor saves a baseline of existing Hyperlane IDs without
+screening historical transactions. Subsequent polls page through Aleo-bound
+messages after the saved ID, in ascending ID order, in batches of 100. The normal
+latest page also provides an overlap for newly observed rows indexed behind
+the cursor. New transactions are queued in `.runtime/merkle-screening.sqlite3`,
+identified by origin domain and transaction hash.
+
+For **each new transaction**, the monitor makes a fresh GET to
+`https://api.merklescience.com/api/v4.2/addresses/`, follows every returned page,
+and keeps Ethereum, Solana, and HyperEVM records. It compares the eligible
+addresses with both Hyperlane sender fields and raises the existing local
+popup/sound/banner on a match. Alerts include the source and returned risk label.
+Multiple messages from the same transaction share one lookup. Successful checks,
+including nonmatches, persist across restarts. No new transactions means no
+Merkle requests. Screening happens before registry enrichment.
+
+The [Get List documentation](https://docs.merklescience.com/reference/list-addresses)
+states that requests without a risk filter return all addresses. Accordingly,
+**a list match is not a declaration that an address is malicious**. All eligible
+returned records are matched as requested, including `risk_level: 0` with
+`No Risk Detected`. No unrequested risk threshold is applied. HyperEVM is
+recognized by its chain label; its vendor-specific numeric ID is not guessed.
+EVM addresses are watched on both Ethereum and HyperEVM.
+
+Failures, invalid responses, and incomplete pagination leave transactions pending
+rather than marking them clear. Retries use exponential backoff with jitter,
+starting around 5 seconds and capped around 5 minutes, honoring longer
+`Retry-After` values. A failure stops the batch to avoid repeatedly querying an
+unavailable service. Pending transactions survive restarts and leaving the latest
+page. The poll reports a failing exit code while screening is pending and keeps
+the previous successful JSON output. Failed desktop launches retry separately
+without fetching the list again.
+
+Keep the runtime directory across restarts to preserve the baseline, queue, audit
+records, and deduplication. Deleting it creates a new baseline and skips existing
+history again. A transaction can trigger one CSV alert and a separate Merkle
+Science alert; both sources are labeled.
 
 Output retains the API fields and adds `origin_chain`, the origin token's
 `token` symbol, `amount` in origin token units, `amount_raw` in origin atomic

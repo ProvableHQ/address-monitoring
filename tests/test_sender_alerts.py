@@ -191,7 +191,7 @@ class DesktopAndCLI(unittest.TestCase):
 
     def test_cli_checks_senders_before_registry_enrichment(self):
         output, errors = io.StringIO(), io.StringIO()
-        with patch("sys.argv", ["address-monitoring.py"]), \
+        with patch("sys.argv", ["address-monitoring.py", "--no-merkle"]), \
              patch.object(monitor, "fetch_messages", return_value=SAMPLE), \
              patch.object(monitor, "check_senders") as check, \
              patch.object(monitor, "cached_routes", side_effect=OSError("registry unavailable")), \
@@ -205,7 +205,7 @@ class DesktopAndCLI(unittest.TestCase):
         data["message_view"][0]["origin_tx_sender"] = EVM
         output, errors = io.StringIO(), io.StringIO()
         with tempfile.TemporaryDirectory() as directory, \
-             patch("sys.argv", ["address-monitoring.py", "--alert-state-dir", directory]), \
+             patch("sys.argv", ["address-monitoring.py", "--no-merkle", "--alert-state-dir", directory]), \
              patch.object(monitor, "fetch_messages", return_value=data), \
              patch.object(monitor, "cached_routes", return_value=[]), \
              patch.object(alerts, "show_local_alert", return_value=True) as popup, \
@@ -249,6 +249,32 @@ class DesktopAndCLI(unittest.TestCase):
         load.assert_not_called()
         check.assert_not_called()
         self.assertEqual(json.loads(output.getvalue()), [])
+
+    def test_default_cli_screens_new_transactions_with_same_alert_state(self):
+        output = io.StringIO()
+        with tempfile.TemporaryDirectory() as directory, \
+             patch("sys.argv", ["address-monitoring.py", "--alert-state-dir", directory]), \
+             patch.object(monitor, "load_api_key", return_value="test-key"), \
+             patch.object(monitor, "fetch_messages", return_value=SAMPLE) as fetch, \
+             patch.object(monitor, "cached_routes", return_value=[]), \
+             patch.object(monitor, "check_senders"), \
+             patch.object(monitor, "screen_new_transactions") as screen, \
+             contextlib.redirect_stdout(output):
+            self.assertEqual(monitor.main(), 0)
+        screen.assert_called_once_with(fetch, "test-key", Path(directory),
+                                       observed_messages=SAMPLE["message_view"])
+
+    def test_merkle_failure_is_not_reported_as_successful_clean_scan(self):
+        output, errors = io.StringIO(), io.StringIO()
+        with patch("sys.argv", ["address-monitoring.py"]), \
+             patch.object(monitor, "load_api_key", return_value="test-key"), \
+             patch.object(monitor, "fetch_messages", return_value=SAMPLE), \
+             patch.object(monitor, "check_senders"), \
+             patch.object(monitor, "screen_new_transactions", side_effect=ValueError("Merkle Science HTTP 429")), \
+             contextlib.redirect_stdout(output), contextlib.redirect_stderr(errors):
+            self.assertEqual(monitor.main(), 1)
+        self.assertEqual(output.getvalue(), "")
+        self.assertIn("429", errors.getvalue())
 
 
 if __name__ == "__main__":
